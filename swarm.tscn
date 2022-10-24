@@ -1,0 +1,669 @@
+[gd_scene load_steps=16 format=3 uid="uid://b51bmh0xlj511"]
+
+[ext_resource type="Script" path="res://swarm.gd" id="1_as8eu"]
+[ext_resource type="PackedScene" uid="uid://kgf2ui5l3qr2" path="res://swarm_entity.tscn" id="2_2g65s"]
+[ext_resource type="Shader" path="res://grid.gdshader" id="2_8yupk"]
+[ext_resource type="Script" path="res://swarm_control.gd" id="3_ftpxv"]
+[ext_resource type="PackedScene" uid="uid://dgp6cq1kcdckq" path="res://prosopis_tree-_02/scene.gltf" id="3_hj6q2"]
+[ext_resource type="Script" path="res://plot.gd" id="4_ngyuo"]
+[ext_resource type="Theme" uid="uid://bem7t6ejeidr" path="res://theme.tres" id="5_ovmhf"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_aw06e"]
+
+[sub_resource type="Sky" id="Sky_u2wvq"]
+sky_material = SubResource("ProceduralSkyMaterial_aw06e")
+
+[sub_resource type="Environment" id="Environment_q514s"]
+background_mode = 2
+sky = SubResource("Sky_u2wvq")
+ambient_light_source = 3
+tonemap_mode = 3
+tonemap_white = 7.14
+ssr_enabled = true
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+sdfgi_cascades = 3
+glow_enabled = true
+glow_normalized = true
+glow_bloom = 0.25
+glow_blend_mode = 1
+fog_light_energy = 0.29
+volumetric_fog_density = 0.0
+adjustment_enabled = true
+adjustment_saturation = 1.21
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_g43j3"]
+dof_blur_far_enabled = true
+dof_blur_far_distance = 500.0
+dof_blur_amount = 0.01
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iwpmu"]
+shading_mode = 2
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.40766, 0.44, 0.3476, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_vtkqt"]
+material = SubResource("StandardMaterial3D_iwpmu")
+size = Vector2(100, 100)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ah1ui"]
+render_priority = 0
+shader = ExtResource("2_8yupk")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_37b8d"]
+material = SubResource("ShaderMaterial_ah1ui")
+size = Vector2(20, 20)
+
+[node name="SwarmSimulation" type="Node3D"]
+
+[node name="Swarm" type="Node3D" parent="."]
+script = ExtResource("1_as8eu")
+swarm_entity_scene = ExtResource("2_2g65s")
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_q514s")
+camera_attributes = SubResource("CameraAttributesPractical_g43j3")
+
+[node name="DirectionalLight3d" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(-0.753621, 0.534713, -0.38228, -0.509088, -0.106925, 0.854047, 0.415794, 0.838242, 0.352797, 0, 0, 0)
+light_color = Color(1, 0.953333, 0.92, 1)
+shadow_enabled = true
+
+[node name="Ground" type="MeshInstance3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -10.1064, -20)
+mesh = SubResource("PlaneMesh_vtkqt")
+
+[node name="Vegetation" type="Node3D" parent="Environment"]
+
+[node name="Tree" parent="Environment/Vegetation" instance=ExtResource("3_hj6q2")]
+transform = Transform3D(-7.08133, 0, 39.3682, 0, 40, 0, -39.3682, 0, -7.08133, 12, -10.1386, -18)
+
+[node name="Grid" type="Node3D" parent="."]
+visible = false
+
+[node name="XZPlane" type="MeshInstance3D" parent="Grid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
+mesh = SubResource("PlaneMesh_37b8d")
+skeleton = NodePath("../..")
+
+[node name="XZPlane2" type="MeshInstance3D" parent="Grid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+mesh = SubResource("PlaneMesh_37b8d")
+skeleton = NodePath("../..")
+
+[node name="YZPlane" type="MeshInstance3D" parent="Grid"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 10, 0, 0)
+mesh = SubResource("PlaneMesh_37b8d")
+skeleton = NodePath("../..")
+
+[node name="XYPlane" type="MeshInstance3D" parent="Grid"]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 0, 0, -10)
+mesh = SubResource("PlaneMesh_37b8d")
+skeleton = NodePath("../..")
+
+[node name="Control" type="Control" parent="." node_paths=PackedStringArray("swarm", "grid", "vegetation", "swarm_size_label", "entity_scale_label", "max_speed_label", "influence_radius_label", "coherence_label", "separation_label", "alignment_label", "distances_computed_label", "distances_time_label", "swarm_time_label", "swarm_size_slider", "entity_scale_slider", "max_speed_slider", "influence_radius_slider", "coherence_slider", "separation_slider", "alignment_slider", "show_center", "show_grid", "show_vegetation", "distances_plot_panel", "swarm_plot_panel", "split_container", "subviewport")]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 3
+theme = ExtResource("5_ovmhf")
+script = ExtResource("3_ftpxv")
+swarm = NodePath("../Swarm")
+grid = NodePath("../Grid")
+vegetation = NodePath("../Environment/Vegetation")
+swarm_size_label = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/SwarmSizeContainer/SwarmSizeLabel")
+entity_scale_label = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/EntityScaleContainer/EntityScaleLabel")
+max_speed_label = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/MaxSpeedContainer/MaxSpeedLabel")
+influence_radius_label = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/InfluenceContainer/InfluenceLabel")
+coherence_label = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/CoherenceContainer/CoherenceLabel")
+separation_label = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/SeparationContainer/SeparationLabel")
+alignment_label = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/AlignmentContainer/AlignmentLabel")
+distances_computed_label = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/DistancesContainer/DistancesComputedLabel")
+distances_time_label = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/DistanceTimeContainer/DistancesTimeLabel")
+swarm_time_label = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/ProcessTimeContainer/SwarmTimeLabel")
+swarm_size_slider = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/SwarmSizeContainer/SwarmSizeSlider")
+entity_scale_slider = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/EntityScaleContainer/EntityScaleSlider")
+max_speed_slider = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/MaxSpeedContainer/MaxSpeedSlider")
+influence_radius_slider = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/InfluenceContainer/InfluenceSlider")
+coherence_slider = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/CoherenceContainer/CoherenceSlider")
+separation_slider = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/SeparationContainer/SeparationSlider")
+alignment_slider = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/AlignmentContainer/AlignmentSlider")
+show_center = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/ToggleContainer/ShowCenterCheckButton")
+show_grid = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/ToggleContainer/ShowGridCheckButton")
+show_vegetation = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/ToggleContainer/ShowVegetationCheckButton")
+distances_plot_panel = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/DistanceTimePlot")
+swarm_plot_panel = NodePath("HSplitContainer/Panel/MarginContainer/VBoxContainer/SwarmTimePlot")
+split_container = NodePath("HSplitContainer")
+subviewport = NodePath("HSplitContainer/SubViewportContainer/SubViewport")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Control"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+split_offset = 420
+
+[node name="Panel" type="Panel" parent="Control/HSplitContainer"]
+layout_mode = 2
+offset_right = 420.0
+offset_bottom = 720.0
+size_flags_stretch_ratio = 0.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/HSplitContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/HSplitContainer/Panel/MarginContainer"]
+layout_mode = 2
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 400.0
+offset_bottom = 690.0
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+offset_right = 350.0
+offset_bottom = 37.0
+theme_override_font_sizes/font_size = 24
+text = "Swarm Simulation"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Dummy" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 47.0
+offset_right = 350.0
+offset_bottom = 64.0
+
+[node name="ControlsSubTitle" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 74.0
+offset_right = 350.0
+offset_bottom = 103.0
+theme_override_font_sizes/font_size = 18
+text = "Controls"
+vertical_alignment = 1
+
+[node name="SwarmSizeContainer" type="HBoxContainer" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 113.0
+offset_right = 350.0
+offset_bottom = 133.0
+theme = ExtResource("5_ovmhf")
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/SwarmSizeContainer"]
+layout_mode = 2
+offset_right = 65.0
+offset_bottom = 20.0
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 1.5
+text = "Swarm size"
+
+[node name="SwarmSizeSlider" type="HSlider" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/SwarmSizeContainer"]
+layout_mode = 2
+offset_left = 120.0
+offset_right = 266.0
+offset_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+max_value = 120.0
+value = 60.0
+rounded = true
+tick_count = 12
+ticks_on_borders = true
+
+[node name="SwarmSizeLabel" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/SwarmSizeContainer"]
+layout_mode = 2
+offset_left = 276.0
+offset_right = 290.0
+offset_bottom = 20.0
+size_flags_horizontal = 2
+text = "10"
+
+[node name="EntityScaleContainer" type="HBoxContainer" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 143.0
+offset_right = 350.0
+offset_bottom = 163.0
+theme = ExtResource("5_ovmhf")
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/EntityScaleContainer"]
+layout_mode = 2
+offset_right = 59.0
+offset_bottom = 20.0
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 1.5
+text = "Entity size"
+
+[node name="EntityScaleSlider" type="HSlider" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/EntityScaleContainer"]
+layout_mode = 2
+offset_left = 120.0
+offset_right = 266.0
+offset_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+min_value = 0.1
+max_value = 5.0
+step = 0.1
+value = 1.0
+tick_count = 12
+ticks_on_borders = true
+
+[node name="EntityScaleLabel" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/EntityScaleContainer"]
+layout_mode = 2
+offset_left = 276.0
+offset_right = 290.0
+offset_bottom = 20.0
+size_flags_horizontal = 2
+text = "10"
+
+[node name="MaxSpeedContainer" type="HBoxContainer" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 173.0
+offset_right = 350.0
+offset_bottom = 193.0
+theme = ExtResource("5_ovmhf")
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/MaxSpeedContainer"]
+layout_mode = 2
+offset_right = 63.0
+offset_bottom = 20.0
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 1.5
+text = "Max speed"
+
+[node name="MaxSpeedSlider" type="HSlider" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/MaxSpeedContainer"]
+layout_mode = 2
+offset_left = 120.0
+offset_right = 266.0
+offset_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+max_value = 50.0
+value = 20.0
+tick_count = 12
+ticks_on_borders = true
+
+[node name="MaxSpeedLabel" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/MaxSpeedContainer"]
+layout_mode = 2
+offset_left = 276.0
+offset_right = 290.0
+offset_bottom = 20.0
+size_flags_horizontal = 2
+text = "10"
+
+[node name="InfluenceContainer" type="HBoxContainer" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 203.0
+offset_right = 350.0
+offset_bottom = 223.0
+theme = ExtResource("5_ovmhf")
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/InfluenceContainer"]
+layout_mode = 2
+offset_right = 94.0
+offset_bottom = 20.0
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 1.5
+text = "Influence radius"
+
+[node name="InfluenceSlider" type="HSlider" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/InfluenceContainer"]
+layout_mode = 2
+offset_left = 120.0
+offset_right = 266.0
+offset_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+max_value = 10.0
+step = 0.1
+value = 1.0
+tick_count = 12
+ticks_on_borders = true
+
+[node name="InfluenceLabel" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/InfluenceContainer"]
+layout_mode = 2
+offset_left = 276.0
+offset_right = 290.0
+offset_bottom = 20.0
+size_flags_horizontal = 2
+text = "10"
+
+[node name="CoherenceContainer" type="HBoxContainer" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 233.0
+offset_right = 350.0
+offset_bottom = 253.0
+theme = ExtResource("5_ovmhf")
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/CoherenceContainer"]
+layout_mode = 2
+offset_right = 89.0
+offset_bottom = 20.0
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 1.5
+text = "Coherence rate"
+
+[node name="CoherenceSlider" type="HSlider" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/CoherenceContainer"]
+layout_mode = 2
+offset_left = 120.0
+offset_right = 266.0
+offset_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+max_value = 0.5
+step = 0.01
+value = 0.3
+tick_count = 12
+ticks_on_borders = true
+
+[node name="CoherenceLabel" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/CoherenceContainer"]
+layout_mode = 2
+offset_left = 276.0
+offset_right = 290.0
+offset_bottom = 20.0
+size_flags_horizontal = 2
+text = "10"
+
+[node name="SeparationContainer" type="HBoxContainer" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 263.0
+offset_right = 350.0
+offset_bottom = 283.0
+theme = ExtResource("5_ovmhf")
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/SeparationContainer"]
+layout_mode = 2
+offset_right = 91.0
+offset_bottom = 20.0
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 1.5
+text = "Separation rate"
+
+[node name="SeparationSlider" type="HSlider" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/SeparationContainer"]
+layout_mode = 2
+offset_left = 120.0
+offset_right = 266.0
+offset_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+max_value = 5.0
+step = 0.05
+value = 0.4
+tick_count = 12
+ticks_on_borders = true
+
+[node name="SeparationLabel" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/SeparationContainer"]
+layout_mode = 2
+offset_left = 276.0
+offset_right = 290.0
+offset_bottom = 20.0
+size_flags_horizontal = 2
+text = "10"
+
+[node name="AlignmentContainer" type="HBoxContainer" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 293.0
+offset_right = 350.0
+offset_bottom = 313.0
+theme = ExtResource("5_ovmhf")
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/AlignmentContainer"]
+layout_mode = 2
+offset_right = 87.0
+offset_bottom = 20.0
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 1.5
+text = "Alignment rate"
+
+[node name="AlignmentSlider" type="HSlider" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/AlignmentContainer"]
+layout_mode = 2
+offset_left = 120.0
+offset_right = 266.0
+offset_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+max_value = 1.0
+step = 0.05
+value = 0.4
+tick_count = 12
+ticks_on_borders = true
+
+[node name="AlignmentLabel" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/AlignmentContainer"]
+layout_mode = 2
+offset_left = 276.0
+offset_right = 290.0
+offset_bottom = 20.0
+size_flags_horizontal = 2
+text = "10"
+
+[node name="ToggleContainer" type="HBoxContainer" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 323.0
+offset_right = 350.0
+offset_bottom = 348.0
+theme = ExtResource("5_ovmhf")
+
+[node name="ShowCenterCheckButton" type="CheckButton" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/ToggleContainer"]
+layout_mode = 2
+offset_right = 120.0
+offset_bottom = 25.0
+size_flags_horizontal = 3
+text = "Show center"
+flat = true
+alignment = 2
+
+[node name="ShowGridCheckButton" type="CheckButton" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/ToggleContainer"]
+layout_mode = 2
+offset_left = 124.0
+offset_right = 230.0
+offset_bottom = 25.0
+size_flags_horizontal = 3
+text = "Show grid"
+alignment = 2
+
+[node name="ShowVegetationCheckButton" type="CheckButton" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/ToggleContainer"]
+layout_mode = 2
+offset_left = 234.0
+offset_right = 345.0
+offset_bottom = 25.0
+size_flags_horizontal = 3
+text = "Vegetation"
+alignment = 2
+
+[node name="Label" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/ToggleContainer"]
+layout_mode = 2
+offset_left = 349.0
+offset_top = 4.0
+offset_right = 350.0
+offset_bottom = 21.0
+size_flags_horizontal = 3
+
+[node name="Dummy2" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 358.0
+offset_right = 350.0
+offset_bottom = 375.0
+
+[node name="PerformanceSubTitle" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 385.0
+offset_right = 350.0
+offset_bottom = 414.0
+theme_override_font_sizes/font_size = 18
+text = "Performance"
+vertical_alignment = 1
+
+[node name="DistancesContainer" type="HBoxContainer" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 424.0
+offset_right = 350.0
+offset_bottom = 444.0
+theme = ExtResource("5_ovmhf")
+
+[node name="Label" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/DistancesContainer"]
+layout_mode = 2
+offset_right = 298.0
+offset_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 7.0
+text = "Distances computed per frame"
+
+[node name="Label2" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/DistancesContainer"]
+layout_mode = 2
+offset_left = 302.0
+offset_top = 1.0
+offset_right = 303.0
+offset_bottom = 18.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+
+[node name="DistancesComputedLabel" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/DistancesContainer"]
+layout_mode = 2
+offset_left = 307.0
+offset_right = 350.0
+offset_bottom = 20.0
+size_flags_horizontal = 3
+text = "10"
+
+[node name="DistanceTimeContainer" type="HBoxContainer" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 454.0
+offset_right = 350.0
+offset_bottom = 474.0
+theme = ExtResource("5_ovmhf")
+
+[node name="Label" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/DistanceTimeContainer"]
+layout_mode = 2
+offset_right = 298.0
+offset_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 7.0
+text = "Distance matrix computation time"
+
+[node name="Label2" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/DistanceTimeContainer"]
+layout_mode = 2
+offset_left = 302.0
+offset_top = 1.0
+offset_right = 303.0
+offset_bottom = 18.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+
+[node name="DistancesTimeLabel" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/DistanceTimeContainer"]
+layout_mode = 2
+offset_left = 307.0
+offset_right = 350.0
+offset_bottom = 20.0
+size_flags_horizontal = 3
+text = "10"
+
+[node name="DistanceTimePlot" type="Panel" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2i(0, 20)
+layout_mode = 2
+offset_top = 484.0
+offset_right = 350.0
+offset_bottom = 504.0
+script = ExtResource("4_ngyuo")
+
+[node name="ProcessTimeContainer" type="HBoxContainer" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 514.0
+offset_right = 350.0
+offset_bottom = 534.0
+theme = ExtResource("5_ovmhf")
+
+[node name="Label" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/ProcessTimeContainer"]
+layout_mode = 2
+offset_right = 298.0
+offset_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 7.0
+text = "Swarm frame process time"
+
+[node name="Label2" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/ProcessTimeContainer"]
+layout_mode = 2
+offset_left = 302.0
+offset_top = 1.0
+offset_right = 303.0
+offset_bottom = 18.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+
+[node name="SwarmTimeLabel" type="Label" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/ProcessTimeContainer"]
+layout_mode = 2
+offset_left = 307.0
+offset_right = 350.0
+offset_bottom = 20.0
+size_flags_horizontal = 3
+text = "10"
+
+[node name="SwarmTimePlot" type="Panel" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2i(0, 20)
+layout_mode = 2
+offset_top = 544.0
+offset_right = 350.0
+offset_bottom = 564.0
+script = ExtResource("4_ngyuo")
+graph_color = Color(0.172549, 0.403922, 1, 1)
+
+[node name="RestartButton" type="Button" parent="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+offset_left = 125.0
+offset_top = 606.0
+offset_right = 225.0
+offset_bottom = 640.0
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme = ExtResource("5_ovmhf")
+theme_override_font_sizes/font_size = 18
+text = "   Restart   "
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Control/HSplitContainer"]
+layout_mode = 2
+offset_left = 432.0
+offset_right = 1280.0
+offset_bottom = 720.0
+size_flags_horizontal = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Control/HSplitContainer/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(848, 720)
+render_target_update_mode = 4
+
+[node name="Camera3d" type="Camera3D" parent="Control/HSplitContainer/SubViewportContainer/SubViewport"]
+transform = Transform3D(0.749874, 0.0693004, -0.657941, 0.0171352, 0.992131, 0.12403, 0.661359, -0.104281, 0.742785, -18.2186, 1.23662, 19.7741)
+fov = 70.0
+far = 200.0
+
+[connection signal="swarm_distance_count_changed" from="Swarm" to="Control" method="_on_swarm_swarm_distance_count_changed"]
+[connection signal="swarm_distance_matrix_time_updated" from="Swarm" to="Control" method="_on_swarm_swarm_distance_matrix_time_updated"]
+[connection signal="swarm_process_time_updated" from="Swarm" to="Control" method="_on_swarm_swarm_process_time_updated"]
+[connection signal="drag_ended" from="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/SwarmSizeContainer/SwarmSizeSlider" to="Control" method="_on_swarm_size_slider_drag_ended"]
+[connection signal="drag_ended" from="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/EntityScaleContainer/EntityScaleSlider" to="Control" method="_on_entity_size_slider_drag_ended"]
+[connection signal="value_changed" from="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/MaxSpeedContainer/MaxSpeedSlider" to="Control" method="_on_max_speed_slider_value_changed"]
+[connection signal="value_changed" from="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/InfluenceContainer/InfluenceSlider" to="Control" method="_on_influence_slider_value_changed"]
+[connection signal="value_changed" from="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/CoherenceContainer/CoherenceSlider" to="Control" method="_on_coherence_slider_value_changed"]
+[connection signal="value_changed" from="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/SeparationContainer/SeparationSlider" to="Control" method="_on_separation_slider_value_changed"]
+[connection signal="value_changed" from="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/AlignmentContainer/AlignmentSlider" to="Control" method="_on_alignment_slider_value_changed"]
+[connection signal="toggled" from="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/ToggleContainer/ShowCenterCheckButton" to="Control" method="_on_show_center_check_button_toggled"]
+[connection signal="toggled" from="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/ToggleContainer/ShowGridCheckButton" to="Control" method="_on_show_grid_check_button_toggled"]
+[connection signal="toggled" from="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/ToggleContainer/ShowVegetationCheckButton" to="Control" method="_on_show_vegetation_check_button_toggled"]
+[connection signal="pressed" from="Control/HSplitContainer/Panel/MarginContainer/VBoxContainer/RestartButton" to="Control" method="_on_restart_button_pressed"]

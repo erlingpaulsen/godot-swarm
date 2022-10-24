@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://kgf2ui5l3qr2"]
+
+[ext_resource type="Script" path="res://swarm_entity.gd" id="1_qmtli"]
+[ext_resource type="PackedScene" uid="uid://dge0uvdphu8r8" path="res://animated_flying_fluttering_butterfly_loop/scene.gltf" id="2_jmyup"]
+
+[node name="SwarmEntity" type="Node3D"]
+script = ExtResource("1_qmtli")
+
+[node name="scene" parent="." instance=ExtResource("2_jmyup")]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)

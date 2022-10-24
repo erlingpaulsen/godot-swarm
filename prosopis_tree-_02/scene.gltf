@@ -1,0 +1,463 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 5363,
+      "max": [
+        87.16145324707031,
+        171.75323486328125,
+        98.45783996582031
+      ],
+      "min": [
+        -86.55805206298828,
+        -1.3124802112579346,
+        -121.64852142333984
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 64356,
+      "componentType": 5126,
+      "count": 5363,
+      "max": [
+        0.9992385506629944,
+        0.9999918341636658,
+        0.9998872876167297
+      ],
+      "min": [
+        -0.9999181032180786,
+        -0.9999997615814209,
+        -0.999754786491394
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 5363,
+      "max": [
+        0.999934732913971,
+        0.9999256730079651,
+        0.9999657869338989,
+        1.0
+      ],
+      "min": [
+        -0.9999465942382813,
+        -0.9999284744262695,
+        -0.9997448921203613,
+        -1.0
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 5363,
+      "max": [
+        2.9461920261383057,
+        49.63401794433594
+      ],
+      "min": [
+        -0.9896940588951111,
+        -1.8041434288024902
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 42904,
+      "componentType": 5126,
+      "count": 5363,
+      "max": [
+        1.0,
+        0.9996291399002075
+      ],
+      "min": [
+        0.0,
+        0.8503709435462952
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 85808,
+      "componentType": 5126,
+      "count": 5363,
+      "max": [
+        2.9461920261383057,
+        49.63401794433594
+      ],
+      "min": [
+        -0.9896940588951111,
+        -1.8041434288024902
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 22551,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 128712,
+      "componentType": 5126,
+      "count": 7130,
+      "max": [
+        107.74324035644531,
+        175.51141357421875,
+        118.28730773925781
+      ],
+      "min": [
+        -101.54485321044922,
+        3.5613632202148438,
+        -142.88658142089844
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 214272,
+      "componentType": 5126,
+      "count": 7130,
+      "max": [
+        0.9998638033866882,
+        0.9999693632125854,
+        0.9999077320098877
+      ],
+      "min": [
+        -0.9999828338623047,
+        -0.9996731877326965,
+        -0.9996732473373413
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 85808,
+      "componentType": 5126,
+      "count": 7130,
+      "max": [
+        0.9988739490509033,
+        0.9977697730064392,
+        0.9991910457611084,
+        1.0
+      ],
+      "min": [
+        -0.998834490776062,
+        -0.9999900460243225,
+        -0.9999669790267944,
+        -1.0
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 128712,
+      "componentType": 5126,
+      "count": 7130,
+      "max": [
+        0.5971008539199829,
+        0.9646169543266296
+      ],
+      "min": [
+        0.0043923864141106606,
+        0.03538322448730469
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 185752,
+      "componentType": 5126,
+      "count": 7130,
+      "max": [
+        0.5971008539199829,
+        0.9646169543266296
+      ],
+      "min": [
+        0.0043923864141106606,
+        0.03538322448730469
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 242792,
+      "componentType": 5126,
+      "count": 7130,
+      "max": [
+        1.0,
+        0.9996291399002075
+      ],
+      "min": [
+        1.0,
+        0.8503709435462952
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 299832,
+      "componentType": 5126,
+      "count": 7130,
+      "max": [
+        0.5971008539199829,
+        0.9646169543266296
+      ],
+      "min": [
+        0.0043923864141106606,
+        0.03538322448730469
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 90204,
+      "componentType": 5125,
+      "count": 23529,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "ASMA3D (https://sketchfab.com/ASMA3D)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/prosopis-tree-02-949704731a8341f691e6f3a5869987af",
+      "title": "Prosopis Tree- 02"
+    },
+    "generator": "Sketchfab-14.5.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 184320,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 356872,
+      "byteOffset": 184320,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 299832,
+      "byteOffset": 541192,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 199888,
+      "byteOffset": 841024,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 1040912,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/Prosopis_Tree_Bark_01_Mat_baseColor.jpeg"
+    },
+    {
+      "uri": "textures/Prosopis_Tree_Bark_01_Mat_normal.png"
+    },
+    {
+      "uri": "textures/Prosopis_Tree_Branches_01_Mat_baseColor.png"
+    },
+    {
+      "uri": "textures/Prosopis_Tree_Branches_01_Mat_normal.png"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "Prosopis_Tree_Bark_01_Mat",
+      "normalTexture": {
+        "index": 1
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.9577051494623774
+      }
+    },
+    {
+      "alphaMode": "BLEND",
+      "doubleSided": true,
+      "name": "Prosopis_Tree_Branches_01_Mat",
+      "normalTexture": {
+        "index": 3
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 2
+        },
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.9577051494623774
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Prosopis_Tree__02_Prosopis_Tree_Bark_01_Mat_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3,
+            "TEXCOORD_1": 4,
+            "TEXCOORD_2": 5
+          },
+          "indices": 6,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Prosopis_Tree__02_Prosopis_Tree_Branches_01_Mat_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 8,
+            "POSITION": 7,
+            "TANGENT": 9,
+            "TEXCOORD_0": 10,
+            "TEXCOORD_1": 11,
+            "TEXCOORD_2": 12,
+            "TEXCOORD_3": 13
+          },
+          "indices": 14,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        -1.0,
+        0.0,
+        0.0,
+        1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "matrix": [
+        0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.009999999776482582,
+        0.0,
+        0.0,
+        -0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Prosopis Tree- 02.fbx"
+    },
+    {
+      "children": [
+        3
+      ],
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        4,
+        5
+      ],
+      "name": "Prosopis_Tree__02"
+    },
+    {
+      "mesh": 0,
+      "name": "Prosopis_Tree__02_Prosopis_Tree_Bark_01_Mat_0"
+    },
+    {
+      "mesh": 1,
+      "name": "Prosopis_Tree__02_Prosopis_Tree_Branches_01_Mat_0"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    },
+    {
+      "sampler": 0,
+      "source": 3
+    }
+  ]
+}
